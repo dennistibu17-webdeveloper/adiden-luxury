@@ -562,31 +562,69 @@ document.addEventListener("keydown", event => {
 // DEMO CHECKOUT
 // =============================================
 
-checkoutButton.addEventListener("click", () => {
+checkoutButton.addEventListener("click", async () => {
     if (cart.length === 0) {
         alert("Your cart is empty. Please add a product first.");
         return;
     }
 
-    alert(
-        "Thank you for shopping with ADIDEN LUXURY!\n\n" +
-        "Your cart total is " + cartTotalElement.textContent +
-        ".\n\n" +
-        "This is a demo checkout. Online payment and order submission " +
-        "have not been connected yet."
+    const email = prompt(
+        "Enter your email address for your Paystack test checkout:"
     );
+
+    if (!email) return;
+
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!validEmail.test(email.trim())) {
+        alert("Please enter a valid email address.");
+        return;
+    }
+
+    checkoutButton.disabled = true;
+    checkoutButton.textContent = "Connecting to Paystack...";
+
+    try {
+        const response = await fetch(
+            "https://adiden-luxury-payments.dennistibu17.workers.dev/",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: email.trim(),
+                    amount: Math.round(
+                        cart.reduce(
+                            (total, item) =>
+                                total + item.price * item.quantity,
+                            0
+                        ) * 100
+                    )
+                })
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok || !result.checkoutUrl) {
+            throw new Error(
+                result.error || "Could not start checkout."
+            );
+        }
+
+        window.location.href = result.checkoutUrl;
+    } catch (error) {
+        console.error("Checkout error:", error);
+        alert(
+            "We couldn't start checkout. Please try again later."
+        );
+    } finally {
+        checkoutButton.disabled = false;
+        checkoutButton.textContent = "Checkout";
+    }
 });
-
-// =============================================
-// FOOTER YEAR
-// =============================================
-
-document.getElementById("currentYear").textContent =
-    new Date().getFullYear();
-
-// =============================================
-// START THE STORE
-// =============================================
-
 renderProducts();
 renderCart();
+console.log("STORE SCRIPT RUNNING");
+console.log("Product grid:", document.getElementById("productGrid"));

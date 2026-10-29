@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ADIDEN LUXURY | Wear Your Distinction</title>
+
+    <meta name="description"
+          content="Shop premium sneakers, T-shirts, caps, beanies and singlets at ADIDEN LUXURY.">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+
+    <!-- ANNOUNCEMENT BAR -->
+    <div class="announcement">
+        ADIDEN LUXURY — WEAR YOUR DISTINCTION
+    </div>
+
+    <!-- HEADER -->
+    <header class="header">
+        <a href="#" class="logo">
+            ADIDEN <span>LUXURY</span>
+        </a>
+
+        <nav class="navigation">
+            <a href="#home">Home</a>
+            <a href="#shop">Shop</a>
+            <a href="#about">About Us</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <button class="cart-button" id="cartToggle" type="button">
+            🛒 Cart <span id="cartCount">0</span>
+        </button>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <p class="eyebrow">WELCOME TO ADIDEN LUXURY</p>
+
+            <h1>WEAR YOUR<br><span>DISTINCTION.</span></h1>
+
+            <p class="hero-description">
+                Elevate your style with premium sneakers,
+                streetwear and accessories.
+            </p>
+
+            <a href="#shop" class="gold-button">SHOP COLLECTION</a>
+        </div>
+    </section>
+
+    <!-- SHOP SECTION -->
+    <main class="shop-section" id="shop">
+
+        <div class="section-heading">
+            <p class="eyebrow">OUR COLLECTION</p>
+            <h2>SHOP THE <span>LOOK</span></h2>
+            <p>Discover your next favourite piece.</p>
+        </div>
+
+        <!-- SEARCH AND SORT -->
+        <div class="shop-tools">
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Search products..."
+                aria-label="Search products"
+            >
+
+            <select id="sortSelect" aria-label="Sort products">
+                <option value="featured">Featured</option>
+                <option value="low">Price: Low to High</option>
+                <option value="high">Price: High to Low</option>
+                <option value="name">Name: A to Z</option>
+            </select>
+        </div>
+
+        <!-- CATEGORY FILTERS -->
+        <div class="filters">
+            <button class="filter-button active" data-category="all">
+                All Products
+            </button>
+
+            <button class="filter-button" data-category="sneakers">
+                Sneakers
+            </button>
+
+            <button class="filter-button" data-category="clothing">
+                Clothing
+            </button>
+
+            <button class="filter-button" data-category="accessories">
+                Accessories
+            </button>
+        </div>
+
+        <!-- PRODUCTS ARE CREATED BY script.js -->
+        <div class="product-grid" id="productGrid"></div>
+
+        <p class="no-results" id="noResults" hidden>
+            No products found. Try another search.
+        </p>
+
+    </main>
+
+    <!-- ABOUT SECTION -->
+    <section class="about-section" id="about">
+        <p class="eyebrow">OUR IDENTITY</p>
+
+        <h2>MORE THAN FASHION.<br><span>IT'S YOUR STATEMENT.</span></h2>
+
+        <p>
+            At ADIDEN LUXURY, we believe personal style is a powerful
+            form of expression. Explore sneakers, clothing and accessories
+            selected to help you express your individuality.
+        </p>
+
+        <a href="#shop" class="gold-button">EXPLORE OUR COLLECTION</a>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact-section" id="contact">
+        <p class="eyebrow">GET IN TOUCH</p>
+
+        <h2>LET'S TALK <span>STYLE.</span></h2>
+
+        <p>
+            Have questions about sizes, colours or availability?
+            Contact us to find out more.
+        </p>
+
+        <p class="contact-note">
+            Contact details can be added here before your website goes live.
+        </p>
+    </section>
+
+    <!-- SHOPPING CART DRAWER -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping cart">
+
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+
+            <button id="closeCart" class="close-button"
+                    type="button" aria-label="Close cart">
+                &times;
+            </button>
+        </div>
+
+        <div id="cartItems" class="cart-items">
+            <p class="empty-cart">Your cart is empty.</p>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total</span>
+                <strong id="cartTotal">GH₵0.00</strong>
+            </div>
+
+            <button id="checkoutButton" class="gold-button checkout-button"
+                    type="button">
+                CHECKOUT
+            </button>
+
+            <p class="checkout-note">
+                This demo does not process payments.
+            </p>
+        </div>
+
+    </aside>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <a href="#home" class="logo">
+            ADIDEN <span>LUXURY</span>
+        </a>
+
+        <p>Wear Your Distinction.</p>
+
+        <p class="copyright">
+            &copy; <span id="currentYear"></span> ADIDEN LUXURY.
+            All rights reserved.
+        </p>
+    </footer>
+
+</body>
+</html>

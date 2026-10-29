@@ -655,7 +655,7 @@ async function verifyPaymentOnReturn() {
         if (response.ok && result.verified === true) {
             alert("Payment verified successfully!");
         } else {
-            alert("Payment could not be verified. Please contact the store.");
+            alert(result.error || "Payment could not be verified.");
         }
     } catch (error) {
         console.error("Payment verification error:", error);

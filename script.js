@@ -585,35 +585,32 @@ checkoutButton.addEventListener("click", async () => {
     checkoutButton.textContent = "Connecting to Paystack...";
 
     try {
-        const response = await fetch(
-            "https://adiden-luxury-payments.dennistibu17.workers.dev/",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    email: email.trim(),
-                    amount: Math.round(
-                        cart.reduce(
-                            (total, item) =>
-                                total + item.price * item.quantity,
-                            0
-                        ) * 100
-                    )
-                })
-            }
-        );
-
-        const result = await response.json();
-
-        if (!response.ok || !result.checkoutUrl) {
-            throw new Error(
-                result.error || "Could not start checkout."
-            );
+    const response = await fetch(
+        "https://adiden-luxury-payments.dennistibu17.workers.dev/",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: email.trim(),
+                items: cart.map(item => ({
+                    id: item.id,
+                    quantity: item.quantity
+                }))
+            })
         }
+    );
 
-        window.location.href = result.checkoutUrl;
+    const result = await response.json();
+
+    if (!response.ok || !result.checkoutUrl) {
+        throw new Error(
+            result.error || "Could not start checkout."
+        );
+    }
+
+    window.location.href = result.checkoutUrl;
     } catch (error) {
         console.error("Checkout error:", error);
         alert(
@@ -624,7 +621,52 @@ checkoutButton.addEventListener("click", async () => {
         checkoutButton.textContent = "Checkout";
     }
 });
+
 renderProducts();
 renderCart();
 console.log("STORE SCRIPT RUNNING");
 console.log("Product grid:", document.getElementById("productGrid"));
+
+async function verifyPaymentOnReturn() {
+    const params = new URLSearchParams(window.location.search);
+    const reference = params.get("reference") || params.get("trxref");
+
+    if (!reference) {
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            "https://adiden-luxury-payments.dennistibu17.workers.dev/",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    action: "verify",
+                    reference: reference
+                })
+            }
+        );
+
+        const result = await response.json();
+
+        if (response.ok && result.verified === true) {
+            alert("Payment verified successfully!");
+        } else {
+            alert("Payment could not be verified. Please contact the store.");
+        }
+    } catch (error) {
+        console.error("Payment verification error:", error);
+        alert("We couldn't verify the payment. Please try again later.");
+    }
+
+    window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname
+    );
+}
+
+verifyPaymentOnReturn();

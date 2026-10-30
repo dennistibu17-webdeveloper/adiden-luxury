@@ -653,10 +653,13 @@ async function verifyPaymentOnReturn() {
         const result = await response.json();
 
         if (response.ok && result.verified === true) {
-            alert("Payment verified successfully!");
-        } else {
-            alert(result.error || "Payment could not be verified.");
-        }
+    cart.length = 0;
+    renderCart();
+
+    alert("Payment verified successfully! Your cart has been cleared.");
+} else {
+    alert("Payment could not be verified. Please contact the store.");
+} 
     } catch (error) {
         console.error("Payment verification error:", error);
         alert("We couldn't verify the payment. Please try again later.");
